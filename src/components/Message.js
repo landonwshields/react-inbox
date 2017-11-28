@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 
-class Message extends Component {
+export default class Message extends Component {
 
-  isRead() {
+  wasRead() {
     if (this.props.read) {
       return "row message read" + this.isSelected(" selected");
     } else {
@@ -11,6 +11,7 @@ class Message extends Component {
   }
 
   isSelected(str) {
+    // console.log(str);
     if (this.props.selected || this.props.checked) {
       return str;
     } else {
@@ -26,6 +27,7 @@ class Message extends Component {
   }
 
   isStarred() {
+    // console.log(this.props.starred);
     if (this.props.starred) {
       return "star fa fa-star";
     } else {
@@ -34,26 +36,27 @@ class Message extends Component {
   }
 
   render() {
-    return (<div className={this.isRead()}>
-      <div className="col-xs-1">
-        <div className="row">
-          <div className="col-xs-2">
-            <input type="checkbox" checked={this.isSelected("checked")} onClick={this.props.selectedClick} //onChange={this.props.unMark}
-            />
-          </div>
-          <div className="col-xs-2">
-            <i className={this.isStarred()} onClick={this.props.starClick}></i>
+    return (
+      <div className={this.wasRead()}>
+        <div className="col-xs-1">
+          <div className="row">
+            <div className="col-xs-2">
+              <input type="checkbox" checked={this.isSelected("checked")} onClick={this.props.selectedClick} //onChange={this.props.unMark}
+              />
+            </div>
+            <div className="col-xs-2">
+              <i className={this.isStarred()} onClick={this.props.starClick}></i>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="col-xs-11">
-        {this.getLabels()}
-        <a href="#">
-          {this.props.subject}
-        </a>
-      </div>
-    </div>);
+        <div className="col-xs-11">
+          {this.getLabels()}
+          <a href="#">
+            {this.props.subject}
+          </a>
+        </div>
+      </div>);
   }
 }
 
-export default Message
+// export default Message

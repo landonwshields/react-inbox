@@ -1,5 +1,5 @@
 import React from 'react';
-import Messages from './Messages';
+import MessageList from './MessageList';
 
 let data = [
   {
@@ -55,7 +55,7 @@ let data = [
   }
 ]
 
-class Toolbar extends React.Component {
+ export default class Toolbar extends React.Component {
   constructor() {
     super();
     for (var i = 0; i < data.length; i++) {
@@ -282,10 +282,10 @@ class Toolbar extends React.Component {
           </button>
         </div>
       </div>
-      <Messages data={this.state.data}
+      <MessageList data={this.state.data}
         starClick={i => this.starClick(i)} selectedClick={i => this.selectedClick(i)}/>
     </div>);
   }
 }
 
-export default Toolbar
+// export default Toolbar

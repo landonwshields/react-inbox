@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import Message from './Message';
 
-class Messages extends Component {
+export default class MessageList extends Component {
 
   mapData() {
     return this.props.data.map(x => {
@@ -20,4 +20,4 @@ class Messages extends Component {
   }
 }
 
-export default Messages
+// export default MessageList
