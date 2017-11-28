@@ -1,30 +1,16 @@
-import React from 'react';
-// import logo from './logo.svg';
-import Toolbar from './components/Toolbar';
-import MessageList from './components/MessageList';
+import React, {Component} from 'react';
 import './App.css';
+import Toolbar from './components/Toolbar';
 
-
-
-
-class App extends React.Component{
-  constructor(props){
-    super(props);
-    this.state = {messages: props.messages}
-  }
-  render(){
+class App extends Component {
+  render() {
     return (
       <div>
+      <header>
         <Toolbar />
-        <MessageList messages={this.state.messages} />
-      </div>
-    )
+      </header>
+    </div>);
   }
 }
-
-
-
-
-
 
 export default App;
