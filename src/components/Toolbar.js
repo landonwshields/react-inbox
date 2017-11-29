@@ -1,73 +1,28 @@
 import React from 'react';
 import MessageList from './MessageList';
 
-let data = [
-  {
-    "id": 1,
-    "subject": "You can't input the protocol without calculating the mobile RSS protocol!",
-    "read": false,
-    "starred": true,
-    "labels": ["dev", "personal"]
-  }, {
-    "id": 2,
-    "subject": "connecting the system won't do anything, we need to input the mobile AI panel!",
-    "read": false,
-    "starred": false,
-    "selected": true,
-    "labels": []
-  }, {
-    "id": 3,
-    "subject": "Use the 1080p HTTP feed, then you can parse the cross-platform hard drive!",
-    "read": false,
-    "starred": true,
-    "labels": ["dev"]
-  }, {
-    "id": 4,
-    "subject": "We need to program the primary TCP hard drive!",
-    "read": true,
-    "starred": false,
-    "selected": true,
-    "labels": []
-  }, {
-    "id": 5,
-    "subject": "If we override the interface, we can get to the HTTP feed through the virtual EXE interface!",
-    "read": false,
-    "starred": false,
-    "labels": ["personal"]
-  }, {
-    "id": 6,
-    "subject": "We need to back up the wireless GB driver!",
-    "read": true,
-    "starred": true,
-    "labels": []
-  }, {
-    "id": 7,
-    "subject": "We need to index the mobile PCI bus!",
-    "read": true,
-    "starred": false,
-    "labels": ["dev", "personal"]
-  }, {
-    "id": 8,
-    "subject": "If we connect the sensor, we can get to the HDD port through the redundant IB firewall!",
-    "read": true,
-    "starred": true,
-    "labels": []
-  }
-]
 
  export default class Toolbar extends React.Component {
   constructor() {
     super();
+    this.state = {
+      checked: false,
+      someChecked: false,
+      data: []
+    };
+    // console.log(this.state.checked);
+  }
+
+  async componentDidMount() {
+    const response = await fetch('https://landon-hypermedia-api-server.herokuapp.com/api/messages')
+    const json = await response.json()
+    const data = json._embedded.messages
+    // console.log(data);
+    this.setState({data: data})
     for (var i = 0; i < data.length; i++) {
       // console.log(data[i].selected);
       data[i].selected = false;
     }
-    this.state = {
-      checked: false,
-      someChecked: false,
-      data: data
-    };
-    // console.log(this.state.checked);
   }
 
   starClick(i) {
@@ -252,6 +207,7 @@ let data = [
     return "disabled";
   }
 
+
   render() {
     return (<div>
       <div className="row toolbar">
@@ -260,6 +216,10 @@ let data = [
             <span className="badge badge">{this.countUnread()}</span>
             unread messages
           </p>
+
+          <a className="btn btn-danger">
+            <i className="fa fa-plus"></i>
+          </a>
 
           <button className="btn btn-default" onClick={this.checkAll}>
             <i className={this.isChecked()}></i>
