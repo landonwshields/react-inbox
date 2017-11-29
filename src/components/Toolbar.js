@@ -211,7 +211,7 @@ let data = [
             added = false;
           }
         }
-        // console.log(e.targets);
+        // console.log(event.target.value);
         if (added) {
           newData[i].labels.push(event.target.value)
         }
