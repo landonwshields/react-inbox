@@ -5,11 +5,13 @@ import Message from './Message';
 export default class MessageList extends Component {
 
   mapData() {
-    return this.props.data.map(x => {
-      return <Message subject={x.subject} read={x.read} starred={x.starred} labels={x.labels}
-      selected={x.selected}
-      starClick={() => this.props.starClick(this.props.data.indexOf(x))}
-      selectedClick={() => this.props.selectedClick(this.props.data.indexOf(x))}/>
+    // console.log(this.props.data);
+    return this.props.data.map(eachData => {
+      // console.log(eachData);
+      return <Message subject={eachData.subject} read={eachData.read} starred={eachData.starred} labels={eachData.labels}
+      selected={eachData.selected}
+      starClick={() => this.props.starClick(this.props.data.indexOf(eachData))}
+      selectedClick={() => this.props.selectedClick(this.props.data.indexOf(eachData))}/>
     })
   }
 

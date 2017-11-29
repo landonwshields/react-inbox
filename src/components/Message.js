@@ -20,14 +20,15 @@ export default class Message extends Component {
   }
 
   getLabels() {
-    return (this.props.labels.map(label => {
-      return (<span className="label label-warning">{label}
+    // console.log(this);
+    return (this.props.labels.map(x => {
+      return (<span className="label label-warning">{x}
       </span>);
     }))
   }
 
   isStarred() {
-    // console.log(this.props.starred);
+    // console.log(this.props);
     if (this.props.starred) {
       return "star fa fa-star";
     } else {

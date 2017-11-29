@@ -59,6 +59,7 @@ let data = [
   constructor() {
     super();
     for (var i = 0; i < data.length; i++) {
+      // console.log(data[i].selected);
       data[i].selected = false;
     }
     this.state = {
@@ -66,13 +67,15 @@ let data = [
       someChecked: false,
       data: data
     };
-
+    // console.log(this.state.checked);
   }
 
   starClick(i) {
     let newData = this.state.data;
     newData[i].starred = !newData[i].starred
+    // console.log(newData[i].starred);
     this.setState({data: newData})
+    // console.log(data);
   }
 
   selectedClick(i) {
@@ -110,24 +113,26 @@ let data = [
 
   checkAll = () => {
     let newData = this.state.data;
-    let flag = true;
+    let allCheck = true;
     for (var i = 0; i < newData.length; i++) {
       if (newData[i].selected) {
         continue;
       } else {
         newData[i].selected = true;
-        flag = false;
+        allCheck = false;
       }
     }
-    if (flag) {
+    if (allCheck) {
       for (i = 0; i < newData.length; i++) {
         newData[i].selected = false;
       }
-      this.setState({checked: false,
+      this.setState({
+        checked: false,
         someChecked: false,
         data: newData})
     } else {
-      this.setState({checked: true,
+      this.setState({
+        checked: true,
         someChecked: false,
         data: newData})
     }
@@ -143,10 +148,11 @@ let data = [
     }
   }
 
-  markAsRead = () => {
+  markRead = () => {
     let newData = this.state.data;
     for (var i = 0; i < newData.length; i++) {
       if (newData[i].selected) {
+        // console.log(newData);
         newData[i].read = true;
       }
     }
@@ -168,9 +174,11 @@ let data = [
   }
 
   countUnread(){
-    let count = 0;
+    var count = 0;
+    // console.log(this.state.data.length);
     for (var i = 0; i < this.state.data.length; i++) {
       if (!this.state.data[i].read) {
+        // console.log(this.state.data[i].read);
         count++;
       }
     }
@@ -178,10 +186,10 @@ let data = [
   }
 
   deleteMessages = () => {
-    console.log('click');
     let newData = [];
     for (var i = 0; i < this.state.data.length; i++) {
       if (!this.state.data[i].selected) {
+        // console.log(!this.state.data[i].selected);
         newData.push(this.state.data[i])
       }
     }
@@ -192,18 +200,20 @@ let data = [
     })
   }
 
-  addLabel = (e) => {
+  addLabel = (event) => {
     let newData = this.state.data;
     for (var i = 0; i < newData.length; i++) {
       if (newData[i].selected) {
-        let add = true;
+        // console.log(newData[i].selected);
+        var added = true;
         for (var j = 0; j < newData[i].labels.length; j++) {
-          if(newData[i].labels[j] === e.target.value){
-            add = false;
+          if(newData[i].labels[j] === event.target.value){
+            added = false;
           }
         }
-        if (add) {
-          newData[i].labels.push(e.target.value)
+        // console.log(e.targets);
+        if (added) {
+          newData[i].labels.push(event.target.value)
         }
       }
     }
@@ -212,19 +222,19 @@ let data = [
     })
   }
 
-  removeLabel = (e) => {
+  removeLabel = (event) => {
     let newData = this.state.data;
     for (var i = 0; i < newData.length; i++) {
       if (newData[i].selected) {
         let remove = false;
         for (var j = 0; j < newData[i].labels.length; j++) {
-          if(newData[i].labels[j] === e.target.value){
+          if(newData[i].labels[j] === event.target.value){
             remove = true;
-            break;
           }
         }
         if (remove) {
-           newData[i].labels.splice(newData[i].labels.indexOf(e.target.value), 1)
+           newData[i].labels.splice(newData[i].labels.indexOf(event.target.value), 1)
+           //splice out one item at the appropriate index
         }
       }
     }
@@ -255,7 +265,7 @@ let data = [
             <i className={this.isChecked()}></i>
           </button>
 
-          <button className="btn btn-default" onClick={this.markAsRead} disabled={this.checkDisabled()}>
+          <button className="btn btn-default" onClick={this.markRead} disabled={this.checkDisabled()}>
             Mark As Read
           </button>
 
