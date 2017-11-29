@@ -25,10 +25,30 @@ import MessageList from './MessageList';
     }
   }
 
+  async changeData(item) {
+    const response = await fetch('https://landon-hypermedia-api-server.herokuapp.com/api/messages', {
+      method: 'PATCH',
+      body: JSON.stringify(item),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    })
+  }
+
+
   starClick(i) {
+    let selectStar = {
+      "messageIds":[],
+      "command":"star",
+      "star":true
+    }
     let newData = this.state.data;
     newData[i].starred = !newData[i].starred
     // console.log(newData[i].starred);
+    selectStar.messageIds.push(newData[i].id)
+    selectStar.star = newData[i].starred
+    this.changeData(selectStar)
     this.setState({data: newData})
     // console.log(data);
   }
