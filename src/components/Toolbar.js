@@ -1,5 +1,6 @@
 import React from 'react';
 import MessageList from './MessageList';
+import Compose from './Compose';
 
 
  export default class Toolbar extends React.Component {
@@ -8,7 +9,8 @@ import MessageList from './MessageList';
     this.state = {
       checked: false,
       someChecked: false,
-      data: []
+      data: [],
+      composing: false
     };
     // console.log(this.state.checked);
   }
@@ -28,6 +30,17 @@ import MessageList from './MessageList';
   async changeData(item) {
     const response = await fetch('https://landon-hypermedia-api-server.herokuapp.com/api/messages', {
       method: 'PATCH',
+      body: JSON.stringify(item),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    })
+  }
+
+  async addItem(item) {
+    const response = await fetch('https://landon-hypermedia-api-server.herokuapp.com/api/messages', {
+      method: 'POST',
       body: JSON.stringify(item),
       headers: {
         'Content-Type': 'application/json',
@@ -202,16 +215,19 @@ import MessageList from './MessageList';
     let labeled = {
       "messageIds": [],
       "command": "addLabel",
-      "label": "dev"
+      "label": event.target.value
     }
     let newData = this.state.data;
+    let label = ""
     for (var i = 0; i < newData.length; i++) {
       if (newData[i].selected) {
         // console.log(newData[i].selected);
         var added = true;
         for (var j = 0; j < newData[i].labels.length; j++) {
+          // console.log(event.target);
           if(newData[i].labels[j] === event.target.value){
             added = false;
+            label = event.target.value
           }
         }
         // console.log(event.target.value);
@@ -231,7 +247,7 @@ import MessageList from './MessageList';
     let unLabeled = {
       "messageIds": [],
       "command": "removeLabel",
-      "label": "dev"
+      "label": event.target.value
     }
     let newData = this.state.data;
     for (var i = 0; i < newData.length; i++) {
@@ -264,6 +280,21 @@ import MessageList from './MessageList';
     return "disabled";
   }
 
+  renderCompose() {
+    if (this.state.composing) {
+      return(
+        <Compose />
+      )
+    }
+    return undefined
+  }
+
+  openCompose = () => {
+    console.log("hello");
+    return this.setState({
+      composing: !this.state.composing
+    })
+  }
 
   render() {
     return (<div>
@@ -274,7 +305,7 @@ import MessageList from './MessageList';
             unread messages
           </p>
 
-          <a className="btn btn-danger">
+          <a className="btn btn-danger" onClick={this.openCompose}>
             <i className="fa fa-plus"></i>
           </a>
 
@@ -309,6 +340,9 @@ import MessageList from './MessageList';
           </button>
         </div>
       </div>
+
+      {this.renderCompose()}
+
       <MessageList data={this.state.data}
         starClick={i => this.starClick(i)} selectedClick={i => this.selectedClick(i)}/>
     </div>);
