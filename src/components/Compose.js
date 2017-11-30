@@ -1,6 +1,9 @@
 import React from 'react';
 
 export default class Compose extends React.Component{
+  constructor(props){
+    super(props)
+  }
   render(){
     return(
       <form className="form-horizontal well" onSubmit={this.props.composeMessage}>

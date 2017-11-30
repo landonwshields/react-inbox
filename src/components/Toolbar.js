@@ -290,11 +290,23 @@ import Compose from './Compose';
   }
 
   openCompose = () => {
-    console.log("hello");
     return this.setState({
       composing: !this.state.composing
     })
   }
+
+
+// work in progress below
+  composeMessage = (e) => {
+    console.log(e);
+    e.preventDefault();
+    let newMessage = {
+      "subject": "I created this",
+      "body": "And it is sent"
+    }
+    this.addItem(newMessage)
+  }
+  //^^^^^^^^^^^^^^^^^^^^
 
   render() {
     return (<div>
