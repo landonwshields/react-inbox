@@ -22,7 +22,7 @@ export default class Message extends Component {
   getLabels() {
     // console.log(this);
     return (this.props.labels.map(x => {
-      return (<span className="label label-warning">{x}
+      return (<span className="label label-warning" key={x.toString()}>{x}
       </span>);
     }))
   }

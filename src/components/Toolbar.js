@@ -124,11 +124,19 @@ import MessageList from './MessageList';
   }
 
   markRead = () => {
+    let selectRead = {
+      "messageIds": [],
+      "command": "read",
+      "read": true
+    }
     let newData = this.state.data;
     for (var i = 0; i < newData.length; i++) {
       if (newData[i].selected) {
         // console.log(newData);
         newData[i].read = true;
+        selectRead.messageIds.push(newData[i].id)
+        selectRead.read = newData[i].read
+        this.changeData(selectRead)
       }
     }
     this.setState({
@@ -137,10 +145,18 @@ import MessageList from './MessageList';
   }
 
   markAsUnRead = () => {
+    let selectUnRead = {
+      "messageIds": [],
+      "command": "read",
+      "read": false
+    }
     let newData = this.state.data;
     for (var i = 0; i < newData.length; i++) {
       if (newData[i].selected) {
         newData[i].read = false;
+        selectUnRead.messageIds.push(newData[i].id)
+        // selectUnRead.read = newData[i].read
+        this.changeData(selectUnRead)
       }
     }
     this.setState({
@@ -161,11 +177,18 @@ import MessageList from './MessageList';
   }
 
   deleteMessages = () => {
+    let isDeleted = {
+      "messageIds": [],
+      "command": "delete"
+    }
     let newData = [];
     for (var i = 0; i < this.state.data.length; i++) {
       if (!this.state.data[i].selected) {
         // console.log(!this.state.data[i].selected);
         newData.push(this.state.data[i])
+      } else if(this.state.data[i].selected){
+        isDeleted.messageIds.push(this.state.data[i].id)
+        this.changeData(isDeleted)
       }
     }
     this.setState({
@@ -176,6 +199,11 @@ import MessageList from './MessageList';
   }
 
   addLabel = (event) => {
+    let labeled = {
+      "messageIds": [],
+      "command": "addLabel",
+      "label": "dev"
+    }
     let newData = this.state.data;
     for (var i = 0; i < newData.length; i++) {
       if (newData[i].selected) {
@@ -189,15 +217,22 @@ import MessageList from './MessageList';
         // console.log(event.target.value);
         if (added) {
           newData[i].labels.push(event.target.value)
+          labeled.messageIds.push(this.state.data[i].id)
+          this.changeData(labeled)
         }
       }
     }
     this.setState({
-      data: newData,
+      data: newData
     })
   }
 
   removeLabel = (event) => {
+    let unLabeled = {
+      "messageIds": [],
+      "command": "removeLabel",
+      "label": "dev"
+    }
     let newData = this.state.data;
     for (var i = 0; i < newData.length; i++) {
       if (newData[i].selected) {
@@ -210,6 +245,8 @@ import MessageList from './MessageList';
         if (remove) {
            newData[i].labels.splice(newData[i].labels.indexOf(event.target.value), 1)
            //splice out one item at the appropriate index
+           unLabeled.messageIds.push(this.state.data[i].id)
+           this.changeData(unLabeled)
         }
       }
     }

@@ -8,7 +8,7 @@ export default class MessageList extends Component {
     // console.log(this.props.data);
     return this.props.data.map(eachData => {
       // console.log(eachData);
-      return <Message subject={eachData.subject} read={eachData.read} starred={eachData.starred} labels={eachData.labels}
+      return <Message key={eachData.id} subject={eachData.subject} read={eachData.read} starred={eachData.starred} labels={eachData.labels}
       selected={eachData.selected}
       starClick={() => this.props.starClick(this.props.data.indexOf(eachData))}
       selectedClick={() => this.props.selectedClick(this.props.data.indexOf(eachData))}/>
@@ -16,9 +16,10 @@ export default class MessageList extends Component {
   }
 
   render() {
-    return (<div>
-      {this.mapData()}
-    </div>)
+    return (
+      <div>
+        {this.mapData()}
+      </div>)
   }
 }
 
